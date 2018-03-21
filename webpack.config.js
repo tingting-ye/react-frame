@@ -6,17 +6,17 @@ module.exports = {
     path: __dirname + "/app",//打包后的文件存放的地方
     filename: "bundle.js"//打包后输出文件的文件名
   },
+  resolve:{
+    extensions:['.js','.json'],
+    alias:{
+      style:__dirname+'/app/style'
+    },
+  },
   devServer: {
     contentBase: "./",//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转
     inline: true//实时刷新
   },
-  // resolve:{
-  //   extensions:['','.js','.json'],
-  //   alias:{
-      
-  //   }
-  // },
   module: {//在配置文件里添加JSON loader
     loaders: [
       {

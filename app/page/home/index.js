@@ -1,5 +1,15 @@
-module.exports = function() {
-  var greet = document.createElement('div');
-  greet.textContent = "加油(๑•̀ㅂ•́)و✧加油";
-  return greet;
-};
+import React, { Component } from 'react'
+
+export default class index extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+  }
+
+  render() {
+    return (
+      <div>杭州欢迎你~~~</div>
+    )
+  }
+}
