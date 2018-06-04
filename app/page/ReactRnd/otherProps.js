@@ -29,6 +29,11 @@ export default class index extends Component {
             // resizeGrid={[1,5]} //指定调整大小的增量
             // dragGrid={[0,0]} //指定移动应捕捉的增量
             // lockAspectRatio={1/2} //锁定宽高比
+            // dragHandleClassName={".handle"} // 设定只有“.handle”可以拖动
+            // enableResizing={{top:true, right:true, bottom:false, left:false, topRight:false, bottomRight:false, bottomLeft:false, topLeft:false}}
+            // disableDragging = {true} // 禁止拖动
+            // cancel={".cancel"} //禁止选择器内元素拖动组件
+            // dragAxis={'none'} // 允许移动的方向
             size={{ width: this.state.width, height: this.state.height }}
             position={{ x: this.state.x, y: this.state.y }}
             onDragStop={(e, d) => { this.setState({ x: d.x, y: d.y }) }}
@@ -39,7 +44,9 @@ export default class index extends Component {
                 ...position,
               });
             }}
-          >Rnd</Rnd>
+          >
+            <div className="cancel">fdsf</div>
+          </Rnd>
         </div>
       </div>
     );

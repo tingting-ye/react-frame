@@ -5,13 +5,17 @@ import App from './page/home/index'
 import ReactRndDefault from './page/ReactRnd/index'
 // 拖拽-大小位置
 import ReactRndSizeOrPosition from './page/ReactRnd/sizeOrPosition'
-// 拖拽-其他参数
-import ReactRndOtherParameter from './page/ReactRnd/otherParameter'
+// 拖拽-其他参数 props
+import ReactRndOtherProps from './page/ReactRnd/otherProps'
+// 拖拽-Callback
+import ReactRndCallback from './page/ReactRnd/rndCallback'
+// 拖拽-API
+import ReactRndApi from './page/ReactRnd/rndApi'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={ReactRndOtherParameter}/>
+      <IndexRoute component={ReactRndApi}/>
     </Route>
   </Route>
 )
