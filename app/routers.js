@@ -1,21 +1,23 @@
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 import App from './page/home/index'
-// 拖拽-基础
+// 拖拽react-rnd -基础
 import ReactRndDefault from './page/ReactRnd/index'
-// 拖拽-大小位置
+// 拖拽react-rnd -大小位置
 import ReactRndSizeOrPosition from './page/ReactRnd/sizeOrPosition'
-// 拖拽-其他参数 props
+// 拖拽react-rnd -其他参数 props
 import ReactRndOtherProps from './page/ReactRnd/otherProps'
-// 拖拽-Callback
+// 拖拽react-rnd -Callback
 import ReactRndCallback from './page/ReactRnd/rndCallback'
-// 拖拽-API
+// 拖拽react-rnd -API
 import ReactRndApi from './page/ReactRnd/rndApi'
+// React-context
+import ReactReduxDefault from './page/ReactRedux/index'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={ReactRndApi}/>
+      <IndexRoute component={ReactReduxDefault}/>
     </Route>
   </Route>
 )
