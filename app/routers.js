@@ -13,11 +13,13 @@ import ReactRndCallback from './page/ReactRnd/rndCallback'
 import ReactRndApi from './page/ReactRnd/rndApi'
 // React-context
 import ReactReduxDefault from './page/ReactRedux/index'
+// React-Highcharts
+import ReactHighchartsDefault from './page/ReactHighcharts/index'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={ReactReduxDefault}/>
+      <IndexRoute component={ReactHighchartsDefault}/>
     </Route>
   </Route>
 )
