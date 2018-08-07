@@ -1,97 +1,110 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
 const ReactHighChart = require("react-highcharts")
-
-
-let i = 0;
-let xValue = undefined
 
 export default class index extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      y:undefined,
-      config: {
+    this.config= {
+        chart:{
+          type:'line',
+          animation:false
+        },
         title: {
           text: '2010 ~ 2016 年太阳能行业就业人员发展情况'
         },
-        tooltip: {
-            formatter: function() {
-                xValue = this.y
-                return '<b>'+ this.x +
-                  '</b> is <b>'+ this.y +'</b>';
-            }
-        },
-        subtitle: {
-          text: '数据来源：thesolarfoundation.com'
-        },
-        xAxis: {
-          crosshair: true
-        },
+        xAxis: [{
+          type:'datetime',
+          labels:{
+            format:'{value:%H:%M:%S}',
+            enabled:true,
+            style:{color:'#666666'},
+          },
+          gridLineWidth:1,
+          gridLineColor:'#C0C0C0'
+        },{
+          tickWidth:0,
+          opposite:true,
+          type:'datetime',
+          gridLineDashStyle:'Solid',
+          labels:{
+            format:'{value:%H:%M:%S}',
+            enabled:true,
+            style:{color:'#666666'},
+          },
+          gridLineWidth:1,
+          crosshair:{
+            color:'#666666',
+            width:1
+          },
+          visible:true
+        }],
         yAxis: {
+          tickAmount:5,
           title: {
-            text: '就业人数'
+            text: null
           }
-        },
-        legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle'
         },
         plotOptions: {
           series: {
-            label: {
-              connectorAllowed: false
-            },
-            pointStart: 2010,
-            events: {
-              click: function (event) {
-                this.chart.xAxis[0].drawCrosshair(event, this);
-                console.log(event)
-              }
-          }
+            // events: {
+            //   click: function (event) {
+            //     this.chart.xAxis[0].drawCrosshair(event, this);
+            //     console.log(event)
+            //   }
+            // }
           }
         },
-        series: [{
-          name: '安装，实施人员',
-          data: [
-            {xValue: 2010 ,y:43934}, 
-            {xValue: 2011 ,y:52503}, 
-            {xValue: 2012 ,y:57177}, 
-            {xValue: 2013 ,y:69658}, 
-            {xValue: 2014 ,y:97031}, 
-            {xValue: 2015 ,y:119931}, 
-            {xValue: 2016 ,y:137133}, 
-            {xValue: 2017 ,y:154175}, 
-          ]
-        }],
-        responsive: {
-          rules: [{
-            condition: {
-              maxWidth: 500
-            },
-            chartOptions: {
-              legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom'
-              }
-            }
-          }]
-        }
+        series: [],
       }
-    }
   }
 
-  componentDidMount = () => {
+  componentDidMount(){
+    this.chart.Highcharts.setOptions({global:{useUTC:false}})
+    const chart = this.chart.getChart()
+    const { series } = chart
+    const config = this.config
+    // 在图表渲染完毕后对图表进行新增数据列操作
+    const newPoint0 = {
+      xAxis:0,
+      name:"initSeries",
+      color:'rgb(0,0,0)',
+      data:[0,0,0,0,0]
+    }
+    chart.addSeries(newPoint0)
+    const newPoint1 = {
+      xAxis:1,
+      name:"v90",
+      color:'rgb(255,130,0)',
+      data:[]
+    }
+    chart.addSeries(newPoint1)
+    setInterval(function () {
+      var x = (new Date()).getTime(), // 当前时间
+        y = Math.random()*100;          // 随机值
+        const tickPositions = []
+        for(let i=0;i<6;i+=1){
+          const time = x-(120000/5*i)
+          tickPositions.push(time)
+        }
+        config.xAxis[0].tickPositions = tickPositions
+        config.xAxis[1].tickPositions = tickPositions
+        chart.update(config)
+        chart.xAxis[0].setExtremes(tickPositions[5],tickPositions[0])
+        chart.xAxis[1].setExtremes(tickPositions[5],tickPositions[0])
+        if(series[1].data.length>=100){
+          series[1].addPoint([x, y], false, true);
+        }else{
+          series[1].addPoint([x, y], false, false);
+        }
+        chart.redraw()
+    }, 2000);
   }
 
   render() {
-    console.log(xValue)
     return (
-      <div>
+      <div style={{width:900}}>
         <ReactHighChart
-          config = {this.state.config}
+          config = {this.config}
           ref = {(el) => {this.chart = el}}
         />
       </div>
