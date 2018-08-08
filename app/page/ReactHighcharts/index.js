@@ -1,13 +1,39 @@
 import React, { Component } from 'react'
 const ReactHighChart = require("react-highcharts")
 
+const timeTemp = []
+let activePointTime = null
 export default class index extends Component {
   constructor(props) {
     super(props)
     this.config= {
         chart:{
           type:'line',
-          animation:false
+          animation:false,
+          events: {
+            click: function(e) {
+              // 获取点击的时间，以整秒为准
+              const nowTime =e.xAxis[0].value
+              var renderer = this.renderer
+              const startTime = this.xAxis[0].tickPositions[this.xAxis[0].tickPositions.length-1]
+              const totalWidth =this.xAxis[0].width
+              const x = (nowTime-startTime)*totalWidth/120000+46;
+              console.log(e.chartX)
+              console.log(x)
+              // const x = e.chartX
+              if(this.myPlotLine) {
+                this.myPlotLine.destroy();
+              }
+              this.myPlotLine = renderer.path(['M', x, this.plotTop, x, this.plotHeight + this.plotTop])
+              .attr({
+                stroke: '#68228B',
+                zIndex: 6,
+                'stroke-width': 1
+              })
+              .add();
+              activePointTime=  Math.ceil(nowTime/1000)*1000
+            }
+          }
         },
         title: {
           text: '2010 ~ 2016 年太阳能行业就业人员发展情况'
@@ -32,26 +58,13 @@ export default class index extends Component {
             style:{color:'#666666'},
           },
           gridLineWidth:1,
-          crosshair:{
-            color:'#666666',
-            width:1
-          },
+          crosshair: false,
           visible:true
         }],
         yAxis: {
           tickAmount:5,
           title: {
             text: null
-          }
-        },
-        plotOptions: {
-          series: {
-            // events: {
-            //   click: function (event) {
-            //     this.chart.xAxis[0].drawCrosshair(event, this);
-            //     console.log(event)
-            //   }
-            // }
           }
         },
         series: [],
@@ -79,7 +92,7 @@ export default class index extends Component {
     }
     chart.addSeries(newPoint1)
     setInterval(function () {
-      var x = (new Date()).getTime(), // 当前时间
+      var x = Date.parse(new Date()), // 当前时间
         y = Math.random()*100;          // 随机值
         const tickPositions = []
         for(let i=0;i<6;i+=1){
@@ -91,13 +104,28 @@ export default class index extends Component {
         chart.update(config)
         chart.xAxis[0].setExtremes(tickPositions[5],tickPositions[0])
         chart.xAxis[1].setExtremes(tickPositions[5],tickPositions[0])
-        if(series[1].data.length>=100){
+        if(series[1].data.length>=120){
+          timeTemp.splice(0,1)
+          timeTemp.push(x)
           series[1].addPoint([x, y], false, true);
         }else{
+          timeTemp.push(x)
           series[1].addPoint([x, y], false, false);
         }
         chart.redraw()
-    }, 2000);
+        if(activePointTime!==null){
+          const points = series[1].points;
+          const index = timeTemp.indexOf(activePointTime)>=0?timeTemp.indexOf(activePointTime):null
+          if(index!==null && index>=0){
+            const activePoint = points[index === null ? points.length -1 : index];
+            console.log(activePoint)
+            chart.tooltip.refresh(activePoint);
+            activePoint.select();
+            chart.xAxis[1].drawCrosshair(null, activePoint);
+          }
+          activePointTime+=1000
+        }
+    }, 1000);
   }
 
   render() {
