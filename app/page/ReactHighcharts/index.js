@@ -13,11 +13,13 @@ export default class index extends Component {
           events: {
             click: function(e) {
               // 获取点击的时间，以整秒为准
-              const nowTime =e.xAxis[0].value
+              console.log(this)
+              const nowTime = e.xAxis[0].value
+              // const nowTime =Math.floor( e.xAxis[0].value/1000 ) * 1000
               var renderer = this.renderer
               const startTime = this.xAxis[0].tickPositions[this.xAxis[0].tickPositions.length-1]
               const totalWidth =this.xAxis[0].width
-              const x = (nowTime-startTime)*totalWidth/120000+46;
+              const x = (nowTime-startTime)*totalWidth/120000+this.xAxis[0].transB;
               console.log(e.chartX)
               console.log(x)
               // const x = e.chartX
@@ -31,7 +33,7 @@ export default class index extends Component {
                 'stroke-width': 1
               })
               .add();
-              activePointTime=  Math.ceil(nowTime/1000)*1000
+              activePointTime=  nowTime
             }
           }
         },
@@ -62,10 +64,14 @@ export default class index extends Component {
           visible:true
         }],
         yAxis: {
+          labels:{
+            enabled:true,
+          },
           tickAmount:5,
           title: {
             text: null
-          }
+          },
+          showFirstLabel: false
         },
         series: [],
       }
@@ -118,14 +124,13 @@ export default class index extends Component {
           const index = timeTemp.indexOf(activePointTime)>=0?timeTemp.indexOf(activePointTime):null
           if(index!==null && index>=0){
             const activePoint = points[index === null ? points.length -1 : index];
-            console.log(activePoint)
             chart.tooltip.refresh(activePoint);
             activePoint.select();
             chart.xAxis[1].drawCrosshair(null, activePoint);
           }
           activePointTime+=1000
         }
-    }, 1000);
+    }, 2000);
   }
 
   render() {
