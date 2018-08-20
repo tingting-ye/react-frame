@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 const ReactHighChart = require("react-highcharts")
+import moment from 'moment'
 
 const timeTemp = []
 let activePointTime = null
@@ -10,32 +11,6 @@ export default class index extends Component {
         chart:{
           type:'line',
           animation:false,
-          events: {
-            click: function(e) {
-              // 获取点击的时间，以整秒为准
-              console.log(this)
-              const nowTime = e.xAxis[0].value
-              // const nowTime =Math.floor( e.xAxis[0].value/1000 ) * 1000
-              var renderer = this.renderer
-              const startTime = this.xAxis[0].tickPositions[this.xAxis[0].tickPositions.length-1]
-              const totalWidth =this.xAxis[0].width
-              const x = (nowTime-startTime)*totalWidth/120000+this.xAxis[0].transB;
-              console.log(e.chartX)
-              console.log(x)
-              // const x = e.chartX
-              if(this.myPlotLine) {
-                this.myPlotLine.destroy();
-              }
-              this.myPlotLine = renderer.path(['M', x, this.plotTop, x, this.plotHeight + this.plotTop])
-              .attr({
-                stroke: '#68228B',
-                zIndex: 6,
-                'stroke-width': 1
-              })
-              .add();
-              activePointTime=  nowTime
-            }
-          }
         },
         title: {
           text: '2010 ~ 2016 年太阳能行业就业人员发展情况'
@@ -75,6 +50,27 @@ export default class index extends Component {
         },
         series: [],
       }
+      this.config.chart.events = {
+        click: function(e) {
+          var renderer = this.renderer
+          // 点击的x轴位置
+          const nowX = e.chartX
+          const leftX = this.yAxis[0].left
+          const endTime = this.xAxis[0].tickPositions[0]
+          const nowTime = Math.round((endTime - 120000+ (nowX-leftX)*120000/this.plotWidth)/1000)* 1000
+          if(this.myPlotLine) {
+            this.myPlotLine.destroy();
+          }
+          this.myPlotLine = renderer.path(['M', nowX, this.plotTop, nowX, this.plotHeight + this.plotTop])
+          .attr({
+            stroke: '#68228B',
+            zIndex: 6,
+            'stroke-width': 1
+          })
+          .add();
+          activePointTime =  nowTime
+        }
+      }
   }
 
   componentDidMount(){
@@ -99,7 +95,7 @@ export default class index extends Component {
     chart.addSeries(newPoint1)
     setInterval(function () {
       var x = Date.parse(new Date()), // 当前时间
-        y = Math.random()*100;          // 随机值
+        y = Math.random()*100;          // 随机值、
         const tickPositions = []
         for(let i=0;i<6;i+=1){
           const time = x-(120000/5*i)
@@ -124,18 +120,19 @@ export default class index extends Component {
           const index = timeTemp.indexOf(activePointTime)>=0?timeTemp.indexOf(activePointTime):null
           if(index!==null && index>=0){
             const activePoint = points[index === null ? points.length -1 : index];
+            console.log(activePoint.category===activePointTime)
             chart.tooltip.refresh(activePoint);
             activePoint.select();
             chart.xAxis[1].drawCrosshair(null, activePoint);
           }
           activePointTime+=1000
         }
-    }, 2000);
+    }, 1000);
   }
 
   render() {
     return (
-      <div style={{width:900}}>
+      <div style={{width:900,margin:'50px auto',border:'1px solid yellow'}}>
         <ReactHighChart
           config = {this.config}
           ref = {(el) => {this.chart = el}}
