@@ -52,16 +52,32 @@ export default class index extends Component {
       }
       this.config.chart.events = {
         click: function(e) {
-          var renderer = this.renderer
-          // 点击的x轴位置
-          const nowX = e.chartX
-          const leftX = this.yAxis[0].left
-          const endTime = this.xAxis[0].tickPositions[0]
-          const nowTime = Math.round((endTime - 120000+ (nowX-leftX)*120000/this.plotWidth)/1000)* 1000
+          console.log(e)
+          // 当前选中的点的时间。。
+          let nowTime = e.xAxis[0].value
+          let nowX = e.chartX
+          // 从timeTemp中获取最近的一个时间点，没有对应坐标，则使用选中的时间（需要做处理）
+          for(let i=0;i<timeTemp.length-1;i++){
+            if(timeTemp[i]<nowTime && nowTime<timeTemp[i+1]){
+              if(nowTime-timeTemp[i]<timeTemp[i+1]-nowTime){
+                nowTime = timeTemp[i]
+              }else{
+                nowTime = timeTemp[i+1]
+              }
+            }
+          }
+          // 对数据进行处理，保证是整秒数据
+          nowTime = Math.round( nowTime/1000 ) * 1000
+          // 坐标开始时间
+          const startTime = this.xAxis[0].tickPositions[this.xAxis[0].tickPositions.length-1]
+          // 计算滑竿
+          nowX  = (nowTime-startTime)*this.plotWidth/120000+this.yAxis[0].left
+          console.log(nowX)
+          console.log(e.chartX)
           if(this.myPlotLine) {
             this.myPlotLine.destroy();
           }
-          this.myPlotLine = renderer.path(['M', nowX, this.plotTop, nowX, this.plotHeight + this.plotTop])
+          this.myPlotLine = this.renderer.path(['M', nowX, this.plotTop, nowX, this.plotHeight + this.plotTop])
           .attr({
             stroke: '#68228B',
             zIndex: 6,
@@ -116,16 +132,16 @@ export default class index extends Component {
         }
         chart.redraw()
         if(activePointTime!==null){
+          activePointTime+=1000
+          console.log(moment(activePointTime).format("YYYY-MM-DD HH:mm:ss"))
           const points = series[1].points;
           const index = timeTemp.indexOf(activePointTime)>=0?timeTemp.indexOf(activePointTime):null
           if(index!==null && index>=0){
             const activePoint = points[index === null ? points.length -1 : index];
-            console.log(activePoint.category===activePointTime)
-            chart.tooltip.refresh(activePoint);
+            // chart.tooltip.refresh(activePoint);
             activePoint.select();
             chart.xAxis[1].drawCrosshair(null, activePoint);
           }
-          activePointTime+=1000
         }
     }, 1000);
   }
