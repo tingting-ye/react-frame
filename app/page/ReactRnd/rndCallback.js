@@ -13,26 +13,26 @@ export default class index extends Component {
   }
 
   /**
-   *  dir:拉升组件的方向 
+   *  dir:拉升组件的方向
    *  ref:拖拽的组件实例
    *  delta:组件的大小
    *  position:组件的位置
    */
-  onResizeStart=(e,dir,ref)=>{
+  onResizeStart = (e, dir, ref) => {
     console.log(e)
     console.log(dir)
     console.log(ref)
   }
 
-  onResize=(e, dir, ref, delta, position)=>{
+  onResize = (e, dir, ref, delta, position) => {
     this.setState({
       width: ref.offsetWidth,
       height: ref.offsetHeight,
       ...position,
     });
   }
-  
-  onResizeStop=(e, dir, ref, delta, position)=>{
+
+  onResizeStop = (e, dir, ref, delta, position) => {
     console.log(e)
     console.log(dir)
     console.log(ref)
@@ -40,17 +40,17 @@ export default class index extends Component {
     console.log(position)
   }
 
-  onDragStart=(e, d)=>{
+  onDragStart = (e, d) => {
     console.log(e)
     console.log(d)
   }
 
-  onDrag=(e, d)=>{
+  onDrag = (e, d) => {
     console.log(e)
     console.log(d)
   }
 
-  onDragStop =(e, d)=>{
+  onDragStop = (e, d) => {
     console.log(e)
     console.log(d)
     this.setState({ x: d.x, y: d.y })
@@ -76,7 +76,7 @@ export default class index extends Component {
             // onResizeStop = {this.onResizeStop} // 结束改变组件大小时
             // onDragStart={this.onDragStart} // 触发改变组件位置时
             // onDrag={this.onDrag}// 改变组件位置中
-            onDragStop ={this.onDragStop} // 结束改变组件位置时
+            onDragStop={this.onDragStop} // 结束改变组件位置时
           >Rnd
           </Rnd>
         </div>
