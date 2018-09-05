@@ -4,6 +4,7 @@ import moment from 'moment'
 
 const timeTemp = []
 let activePointTime = null
+let myPlotLine = null
 export default class index extends Component {
   constructor(props) {
     super(props)
@@ -72,12 +73,11 @@ export default class index extends Component {
         const startTime = this.xAxis[0].tickPositions[this.xAxis[0].tickPositions.length - 1]
         // 计算滑竿
         nowX = (nowTime - startTime) * this.plotWidth / 120000 + this.yAxis[0].left
-        console.log(nowX)
-        console.log(e.chartX)
-        if (this.myPlotLine) {
-          this.myPlotLine.destroy();
+        if (myPlotLine) {
+          myPlotLine.destroy();
+          myPlotLine = null;
         }
-        this.myPlotLine = this.renderer.path(['M', nowX, this.plotTop, nowX, this.plotHeight + this.plotTop])
+        myPlotLine = this.renderer.path(['M', nowX, this.plotTop, nowX, this.plotHeight + this.plotTop])
           .attr({
             stroke: '#68228B',
             zIndex: 6,
@@ -109,7 +109,9 @@ export default class index extends Component {
       data: []
     }
     chart.addSeries(newPoint1)
+    const self = this
     setInterval(function () {
+      self.updateToop()
       var x = Date.parse(new Date()), // 当前时间
         y = Math.random() * 100;          // 随机值、
       const tickPositions = []
@@ -131,6 +133,7 @@ export default class index extends Component {
         series[1].addPoint([x, y], false, false);
       }
       chart.redraw()
+      console.log(chart.plotWidth)
       if (activePointTime !== null) {
         activePointTime += 1000
         console.log(moment(activePointTime).format("YYYY-MM-DD HH:mm:ss"))
@@ -146,9 +149,28 @@ export default class index extends Component {
     }, 1000);
   }
 
+  updateToop = () => {
+    const chart = this.chart.getChart()
+    // 坐标开始时间
+    const startTime = chart.xAxis[0].tickPositions[chart.xAxis[0].tickPositions.length - 1]
+    // 计算滑竿
+    const nowX = (activePointTime - startTime) * chart.plotWidth / 120000 + chart.yAxis[0].left
+    if (myPlotLine) {
+      myPlotLine.destroy();
+      myPlotLine = null;
+    }
+    myPlotLine = chart.renderer.path(['M', nowX, chart.plotTop, nowX, chart.plotHeight + chart.plotTop])
+      .attr({
+        stroke: '#68228B',
+        zIndex: 6,
+        'stroke-width': 1
+      })
+      .add();
+  }
+
   render() {
     return (
-      <div style={{ width: 900, margin: '50px auto', border: '1px solid yellow' }}>
+      <div style={{ width: '70%', margin: '50px auto', border: '1px solid yellow' }}>
         <ReactHighChart
           config={this.config}
           ref={(el) => { this.chart = el }}
