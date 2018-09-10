@@ -85,6 +85,8 @@ export default class index extends Component {
           })
           .add();
         activePointTime = nowTime
+
+      console.log("fdsf"+moment(activePointTime,'YYYY-MM-DD HH:mm:ss').valueOf())
       }
     }
   }
@@ -111,7 +113,7 @@ export default class index extends Component {
     chart.addSeries(newPoint1)
     const self = this
     setInterval(function () {
-      self.updateToop()
+      // self.updateToop()
       var x = Date.parse(new Date()), // 当前时间
         y = Math.random() * 100;          // 随机值、
       const tickPositions = []
@@ -133,10 +135,8 @@ export default class index extends Component {
         series[1].addPoint([x, y], false, false);
       }
       chart.redraw()
-      console.log(chart.plotWidth)
       if (activePointTime !== null) {
         activePointTime += 1000
-        console.log(moment(activePointTime).format("YYYY-MM-DD HH:mm:ss"))
         const points = series[1].points;
         const index = timeTemp.indexOf(activePointTime) >= 0 ? timeTemp.indexOf(activePointTime) : null
         if (index !== null && index >= 0) {
@@ -147,6 +147,18 @@ export default class index extends Component {
         }
       }
     }, 1000);
+  }
+
+  componentWillReceiveProps () {
+    if(this.chart){
+      this.chart.getChart().reflow()
+    }
+  }
+
+  shouldComponentUpdate(nextProps){
+    if (this.props.item!==nextProps.item){
+      return false
+    }
   }
 
   updateToop = () => {

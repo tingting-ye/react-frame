@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import Rnd from "react-rnd"
+import HighChart from '../ReactHighcharts/index'
 
 export default class index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      width: 200,
-      height: 200,
+      width: 500,
+      height: 500,
       x: 10,
       y: 10,
     }
@@ -29,7 +30,7 @@ export default class index extends Component {
           <p>高度{this.state.height}</p>
           <Rnd
             style={style}
-            maxWidth={300} // 最大值maxWidth（maxHeight）、最小是minWidth（minHeight）
+            maxWidth={1500} // 最大值maxWidth（maxHeight）、最小是minWidth（minHeight）
             size={{ width: this.state.width, height: this.state.height }}
             position={{ x: this.state.x, y: this.state.y }}
             onDragStop={(e, d) => { this.setState({ x: d.x, y: d.y }) }}
@@ -40,7 +41,7 @@ export default class index extends Component {
                 ...position,
               });
             }}
-          >Rnd</Rnd>
+          ><HighChart item={this.state}/></Rnd>
         </div>
       </div>
     );
