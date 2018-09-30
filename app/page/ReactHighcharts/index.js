@@ -16,7 +16,7 @@ export default class index extends Component {
       title: {
         text: '2010 ~ 2016 年太阳能行业就业人员发展情况'
       },
-      xAxis: [{
+      xAxis: {
         type: 'datetime',
         labels: {
           format: '{value:%H:%M:%S}',
@@ -25,26 +25,7 @@ export default class index extends Component {
         },
         gridLineWidth: 1,
         gridLineColor: '#C0C0C0'
-      }, {
-        tickWidth: 0,
-        opposite: true,
-        type: 'datetime',
-        gridLineDashStyle: 'Solid',
-        labels: {
-          format: '{value:%H:%M:%S}',
-          enabled: true,
-          style: { color: '#666666' },
-        },
-        xAxis: {
-          type:'datetime',
-          labels:{
-            format:'{value:%H:%M:%S}',
-            enabled:true,
-            style:{color:'#666666'},
-          },
-          gridLineWidth:1,
-          gridLineColor:'#C0C0C0'
-        },
+      },
         yAxis: {
           labels:{
             enabled:true,
@@ -102,25 +83,6 @@ export default class index extends Component {
     if (this.props.item!==nextProps.item){
       return false
     }
-  }
-
-  updateToop = () => {
-    const chart = this.chart.getChart()
-    // 坐标开始时间
-    const startTime = chart.xAxis[0].tickPositions[chart.xAxis[0].tickPositions.length - 1]
-    // 计算滑竿
-    const nowX = (activePointTime - startTime) * chart.plotWidth / 120000 + chart.yAxis[0].left
-    if (myPlotLine) {
-      myPlotLine.destroy();
-      myPlotLine = null;
-    }
-    myPlotLine = chart.renderer.path(['M', nowX, chart.plotTop, nowX, chart.plotHeight + chart.plotTop])
-      .attr({
-        stroke: '#68228B',
-        zIndex: 6,
-        'stroke-width': 1
-      })
-      .add();
   }
 
   render() {
