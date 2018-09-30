@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'  
+import PropTypes from 'prop-types'
 import Header from './content/header'
 import Main from './content/main'
 
@@ -7,13 +7,13 @@ export default class index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      themeColor:"red"
+      themeColor: "red"
     }
   }
 
   // 设置content的过程
-  getChildContext () {
-    return {themeColor : this.state.themeColor}
+  getChildContext() {
+    return { themeColor: this.state.themeColor }
   }
 
   render() {
@@ -21,18 +21,18 @@ export default class index extends Component {
       <div>
         <div className="page">
           <div className="page-content">
-            <Header/>
+            <Header />
             <Main />
           </div>
         </div>
       </div>
     )
   }
-} 
+}
 
 index.childContextTypes = {
-  themeColor:PropTypes.string  
-} 
+  themeColor: PropTypes.string
+}
 
 /**
  * context进行传递数据时，

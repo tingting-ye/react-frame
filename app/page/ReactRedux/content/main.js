@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'  
+import PropTypes from 'prop-types'
 import MainChild from './mainChild'
 
 export default class index extends Component {
@@ -8,13 +8,13 @@ export default class index extends Component {
   }
 
   render() {
-    console.log("main*****"+this.context.themeColor)
+    console.log("main*****" + this.context.themeColor)
     return (
       <div>
         <div className="page">
           <div className="page-content">
             <p>main</p>
-            <MainChild/>
+            <MainChild />
           </div>
         </div>
       </div>
@@ -23,6 +23,6 @@ export default class index extends Component {
 }
 
 index.contextTypes = {
-  themeColor: PropTypes.string  
+  themeColor: PropTypes.string
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'  
+import PropTypes from 'prop-types'
 
 export default class index extends Component {
   constructor(props) {
@@ -7,12 +7,12 @@ export default class index extends Component {
   }
 
   render() {
-    console.log("mainChild*****"+this.context.themeColor)
+    console.log("mainChild*****" + this.context.themeColor)
     return (
       <div>
         <div className="page">
           <div className="page-content">
-          <p>MainChild</p>
+            <p>MainChild</p>
           </div>
         </div>
       </div>
@@ -21,6 +21,6 @@ export default class index extends Component {
 }
 
 index.contextTypes = {
-  themeColor: PropTypes.string  
+  themeColor: PropTypes.string
 }
 

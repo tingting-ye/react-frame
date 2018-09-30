@@ -15,11 +15,13 @@ import ReactRndApi from './page/ReactRnd/rndApi'
 import ReactReduxDefault from './page/ReactRedux/index'
 // React-Highcharts
 import ReactHighchartsDefault from './page/ReactHighcharts/index'
+// React-Dnd -基础
+import ReactDndDefault from './page/ReactDnd/index'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={ReactHighchartsDefault}/>
+      <IndexRoute component={ReactRndSizeOrPosition} />
     </Route>
   </Route>
 )
