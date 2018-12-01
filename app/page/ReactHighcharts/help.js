@@ -66,7 +66,6 @@ export function getSeries(dataSource) {
 export function getConfig(dataSource) {
   initConfig.yAxis = getYAxis(dataSource);
   initConfig.series = getSeries(dataSource);
-  _
   const timeArr = _.map(initConfig.series[0].data, record=> record.x)
   const minRange =  (timeArr[timeArr.length-1] - timeArr[0])/5;
   const pos = []
