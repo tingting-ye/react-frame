@@ -93,7 +93,6 @@ export default class index extends Component {
           ref={(el) => { this.chart = el }}
         />
       </div>
-
     )
   }
 }
