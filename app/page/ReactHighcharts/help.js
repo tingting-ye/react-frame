@@ -7,10 +7,16 @@ const initConfig = {
   navigator: { enabled: false }, // 隐藏底部导航器
   scrollbar: { enabled: false }, // 隐藏底部滚动条
   title: { text: null }, // 隐藏图表标题
+  chart: {
+    animation: false
+  },
   xAxis: {
+    showFirstLabel: true,
+    showLastLable:true,
     type: 'datetime',
+    tickmarkPlecement: 'on',
+    gridLineWidth:1,
     labels: {
-      align: 'left',
       format:'{value:%H:%M:%S}'
     }
   },
@@ -19,6 +25,7 @@ const initConfig = {
   tooltip: {
     shared: false, // 不共享数据
     split: false, // 只显示当前图表内的点位信息
+    xDateFormat:'%Y-%m-%d %H:%M:%S'
   }
 }
 
@@ -26,11 +33,23 @@ const yAxisConfig = {
   opposite: false, // y轴放在左侧
   resize: { enabled: true }, // 上下可拖拽
   lineWidth: 1,
+  gridLineWidth:1,
   offset: 0,
   labels: {
     align: 'right',
     format: '{value}'
-  }
+  },
+  plotLines: [{
+    color: '#FF0000',
+    width: 2,
+    value: 20,
+    label: {
+      text: 'Plot line',
+      align: 'left',
+      textAlign: 'right',
+      x: 0
+    }
+}]
 }
 
 const seriesConfig = {
@@ -66,23 +85,25 @@ export function getSeries(dataSource) {
 export function getConfig(dataSource) {
   initConfig.yAxis = getYAxis(dataSource);
   initConfig.series = getSeries(dataSource);
-  const timeArr = _.map(initConfig.series[0].data, record=> record.x)
-  const minRange =  (timeArr[timeArr.length-1] - timeArr[0])/5;
-  const pos = []
-  for(let i = 0; i<5;i+=1) {
-    pos.push(timeArr[timeArr.length-1] - i*minRange)
-  }
-  console.log(pos);
   return initConfig
 }
 
 export function mockData() {
   const arr = []
-  const nowTime = new Date().valueOf();
-  for(let i = 0; i<10;i+=1) {
-    const time = nowTime + 1000 * i;
+  const nowTime = 1543802855000;
+  for(let i = 0; i<12;i+=1) {
+    const time = nowTime - 1000 * i;
     const value = Math.random() * 100
-    arr.push({x:time,y:value})
+    arr.unshift({x:time,y:value})
   }
   return arr;
+}
+
+export function getTickPostions(time) {
+  const minRange =  12000/12;
+  const pos = []
+  for(let i = 0; i<12;i+=1) {
+    pos.unshift(time - i * minRange)
+  }
+  return pos;
 }
