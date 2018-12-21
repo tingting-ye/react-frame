@@ -91,7 +91,7 @@ export function getConfig(dataSource) {
 export function mockData() {
   const arr = []
   const nowTime = 1543802855000;
-  for(let i = 0; i<12;i+=1) {
+  for(let i = 0; i<120;i+=1) {
     const time = nowTime - 1000 * i;
     const value = Math.random() * 100
     arr.unshift({x:time,y:value})
@@ -102,7 +102,7 @@ export function mockData() {
 export function getTickPostions(time) {
   const minRange =  12000/12;
   const pos = []
-  for(let i = 0; i<12;i+=1) {
+  for(let i = 0; i<120;i+=1) {
     pos.unshift(time - i * minRange)
   }
   return pos;

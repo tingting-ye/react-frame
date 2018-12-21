@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import Highcharts from "highcharts/highstock";
 import HighchartsMore from "highcharts/highcharts-more";
 import DragPanes from "highcharts/modules/drag-panes";
+import { chartWrapper  } from "./utils";
 import * as _ from 'lodash'
 
 import { getConfig, getTickPostions } from "./help";
 
 HighchartsMore(Highcharts)
 DragPanes(Highcharts)
-
+chartWrapper(Highcharts)
 
 export default class index extends Component {
   constructor(props) {
@@ -25,9 +26,9 @@ export default class index extends Component {
     this.chart = Highcharts.stockChart(this.container, Option);
     console.log(tickPositions)
     // this.chart.xAxis[0].setExtremes(tickPositions[0],tickPositions[tickPositions.length-1])
-    this.setInterval = setInterval(() => {
-      this.addPoint();
-    }, 1000);
+    // this.setInterval = setInterval(() => {
+    //   this.addPoint();
+    // }, 1000);
   }
 
   componentWillUnmount(){
@@ -48,11 +49,13 @@ export default class index extends Component {
 
   render() {
     return (
-      <div style={{width:1200,margin:'50px auto'}}>
-        <div
-          style={{height:500}}
-          ref={(el)=>this.container = el}
-        />
+      <div style={{transformOrigin: 'left top 0', width:'1200px', transform: 'matrix(1,0,0,1,0,0)' }}>
+        <div style={{width:'100%',height:'100%'}}>
+          <div
+            style={{height:500}}
+            ref={(el)=>this.container = el}
+          />
+        </div>
       </div>
     )
   }

@@ -26,27 +26,7 @@ export default class index extends Component {
       <div>
         <div className="page">
           <div className="page-content">
-            {/* {this.props.children} */}
-            <Select
-              labelInValue
-              value={{
-                key: this.state.value.key,
-                label: this.state.value.label
-              }}
-              optionLabelProp="text"
-              style={{ width: 120 }}
-              dropdownStyle={{
-                width: 300
-              }}
-              onChange={this.handleChange}
-            >
-              <Option value="1" text="Jack">
-                Jack (100)
-              </Option>
-              <Option value="2" text="Lucy">
-                Lucy (101)
-              </Option>
-            </Select>
+            {this.props.children}
           </div>
         </div>
       </div>

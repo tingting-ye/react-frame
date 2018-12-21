@@ -21,7 +21,7 @@ import ReactDndDefault from './page/ReactDnd/index'
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      {/* <IndexRoute component={ReactHighchartsDefault} /> */}
+      <IndexRoute component={ReactHighchartsDefault} />
     </Route>
   </Route>
 )
