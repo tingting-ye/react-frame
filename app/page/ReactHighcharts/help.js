@@ -26,6 +26,16 @@ const initConfig = {
     shared: false, // 不共享数据
     split: false, // 只显示当前图表内的点位信息
     xDateFormat:'%Y-%m-%d %H:%M:%S'
+  },
+  dateTimeLabelFormats: {
+    millisecond: '%H:%M:%S.%L',
+    second: '%H:%M:%S',
+    minute: '%H:%M',
+    hour: '%H:%M',
+    day: '%m-%d',
+    week: '%m-%d',
+    month: '%Y-%m',
+    year: '%Y'
   }
 }
 
@@ -89,21 +99,29 @@ export function getConfig(dataSource) {
 }
 
 export function mockData() {
-  const arr = []
-  const nowTime = 1543802855000;
-  for(let i = 0; i<120;i+=1) {
-    const time = nowTime - 1000 * i;
-    const value = Math.random() * 100
-    arr.unshift({x:time,y:value})
-  }
+  // const arr = []
+  // const nowTime = 1543802855000;
+  // for(let i = 0; i<10;i+=1) {
+  //   const time = nowTime - 1000000 * i;
+  //   const value = Math.random() * 100
+  //   arr.unshift({x:time,y:value})
+  // }
+  const arr = [
+    {x:1546920000000,y:100},
+    {x:1547006400000,y:100},
+    {x:1547092800000,y:100},
+    {x:1547265600000,y:100},
+    {x:1547352000000,y:100},
+    {x:1547438400000,y:100}
+  ]
   return arr;
 }
 
 export function getTickPostions(time) {
-  const minRange =  12000/12;
-  const pos = []
-  for(let i = 0; i<120;i+=1) {
-    pos.unshift(time - i * minRange)
-  }
+  const minRange =  12000000/12;
+  const pos = [1546920000000,1547006400000,1547092800000,1547265600000,1547352000000,1547438400000]
+  // for(let i = 0; i<10;i+=1) {
+  //   pos.unshift(time - i * minRange)
+  // }
   return pos;
 }

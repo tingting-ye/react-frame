@@ -14,7 +14,7 @@ import ReactRndApi from './page/ReactRnd/rndApi'
 // React-context
 import ReactReduxDefault from './page/ReactRedux/index'
 // React-Highcharts
-import ReactHighchartsDefault from './page/ReactHighcharts/moreYAxis'
+import ReactHighchartsDefault from './page/ReactHighcharts/xAxisChart'
 // React-Dnd -基础
 import ReactDndDefault from './page/ReactDnd/index'
 

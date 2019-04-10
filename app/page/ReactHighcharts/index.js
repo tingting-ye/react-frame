@@ -18,6 +18,16 @@ export default class index extends Component {
       },
       xAxis: {
         type: 'datetime',
+        dateTimeLabelFormats: {
+          millisecond: '%H:%M:%S.%L',
+          second: '%H:%M:%S',
+          minute: '%H:%M',
+          hour: '%H:%M',
+          day: '%m-%d',
+          week: '%m-%d',
+          month: '%Y-%m',
+          year: '%Y'
+        },
         labels: {
           format: '{value:%H:%M:%S}',
           enabled: true,
@@ -52,25 +62,17 @@ export default class index extends Component {
     }
     chart.addSeries(newPoint1)
     const self = this
-    setInterval(function () {
-      // self.updateToop()
-      var x = Date.parse(new Date()), // 当前时间
-        y = Math.random()*100;          // 随机值、
-        const tickPositions = []
-        for(let i=0;i<6;i+=1){
-          const time = x-(120000/5*i)
-          tickPositions.push(time)
-        }
-        config.xAxis.tickPositions = tickPositions
-        chart.update(config)
-        chart.xAxis[0].setExtremes(tickPositions[5],tickPositions[0])
-        if(series[0].data.length>=120){
-          series[0].addPoint([x, y], false, true);
-        }else{
-          series[0].addPoint([x, y], false, false);
-        }
-        chart.redraw()
-    }, 1000);
+    // setInterval(function () {
+    //   var x = Date.parse(new Date()), // 当前时间
+    //     y = Math.random()*100;          // 随机值
+    //     chart.update(config)
+    //     if(series[0].data.length>=120){
+    //       series[0].addPoint([x, y], false, true);
+    //     }else{
+    //       series[0].addPoint([x, y], false, false);
+    //     }
+    //     chart.redraw()
+    // }, 1000);
   }
 
   componentWillReceiveProps () {
