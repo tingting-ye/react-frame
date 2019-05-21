@@ -24,7 +24,7 @@ export default class index extends Component {
     const tickPositions = getTickPostions(this.addTime);
     Option.xAxis.tickPositions = tickPositions
     this.chart = Highcharts.stockChart(this.container, Option);
-    console.log(tickPositions)
+    // console.log(tickPositions)
     // this.chart.xAxis[0].setExtremes(tickPositions[0],tickPositions[tickPositions.length-1])
     // this.setInterval = setInterval(() => {
     //   this.addPoint();
