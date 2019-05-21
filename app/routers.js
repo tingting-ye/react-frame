@@ -17,6 +17,7 @@ import ReactReduxDefault from './page/ReactRedux/index'
 import ReactHighchartsDefault from './page/ReactHighcharts/moreYAxis'
 // React-Dnd -基础
 import ReactDndDefault from './page/ReactDnd/index'
+import Select from './page/AntD/Select'
 
 const routers = (
   <Route>

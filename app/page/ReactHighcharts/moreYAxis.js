@@ -28,6 +28,7 @@ export default class index extends Component {
     // this.chart.xAxis[0].setExtremes(tickPositions[0],tickPositions[tickPositions.length-1])
     // this.setInterval = setInterval(() => {
     //   this.addPoint();
+    //   // this.setState({})
     // }, 1000);
   }
 
