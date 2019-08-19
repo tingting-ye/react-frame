@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
+import { Button, Select } from 'antd'
 import * as _ from 'lodash'
 import Highcharts from "highcharts/highcharts";
 import HighchartsMore from "highcharts/highcharts-more";
@@ -54,17 +54,13 @@ export default class index extends BaseChart {
           dataLabels: {
             crop : false,
             overflow: 'none',
-            format: '<b>{point.name}</b> ({point.y:,.3f})',
+            format: '{point.name}:{point.y}',
             softConnector: true
           }
         }
       }
     }
     this.currentConfig = _.merge({},this.initConfig,this.customConfig);
-    this.updateConfig = {
-      neckWidth: '0%',
-      neckHeight: '0%'
-    }
   }
 
   componentDidMount(){
@@ -87,9 +83,30 @@ export default class index extends BaseChart {
     this.updateConfigNew('plotOptions',ObjConfig);
   }
 
+  selectFormat = (value)=> {
+    const ObjConfig = { dataLabels:{ format: value} }
+    this.setFunnelConfig(ObjConfig);
+  }
+
   render() {
+    const Option = [
+      {value:'{point.name}',name:'名称'},
+      {value:'{point.percentage:.2f}%',name:'百分比'},
+      {value:'{point.y}',name:'值'},
+      {value:'{point.name}:{point.percentage:.2f}',name:'名称：百分比'},
+      {value:'{point.name}:{point.y}',name:'名称：值'},
+      {value:'{point.y}:{point.percentage:.2f}',name:'值：百分比'},
+      {value:'{point.name}({point.percentage:.2f}):{point.y}',name:'名称(百分比):值'},
+    ]
     return (
-      <div style={{minWidth: '410px', maxWidth: '600px',height: '400px' ,margin: '0 auto'}}>
+      <div style={{minWidth: '410px', maxWidth: '600px',height: '400px' ,margin: '0 auto',border:'1px red solid',overflow:'hidden'}}>
+        <Select style={{ width: 120 }} onChange={this.selectFormat}>
+          {
+            _.map(Option,(item,index)=>
+              <Select.Option key={index} value={item.value}>{item.name}</Select.Option>
+            )
+          }
+        </Select>
         <Button onClick={()=> this.setFunnelConfig(this.updateConfig)}>修改参数配置</Button>
         <div style={{width:'100%',height:'100%'}} ref={(el)=>{this.container = el}}/>
       </div>

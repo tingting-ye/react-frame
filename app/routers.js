@@ -18,13 +18,14 @@ import ReactHighchartsDefault from './page/ReactHighcharts/xAxisChart'
 // React-Dnd -基础
 import ReactDndDefault from './page/ReactDnd/index'
 import Select from './page/AntD/Select'
+import Tree from './page/AntD/Tree'
 
 import Funnel from './page/HighCharts/Funnel/index'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={Funnel} />
+      <IndexRoute component={Tree} />
     </Route>
   </Route>
 )
