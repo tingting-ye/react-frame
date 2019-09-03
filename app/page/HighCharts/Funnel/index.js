@@ -35,7 +35,11 @@ export default class index extends BaseChart {
             padding: 5,
             style: {
               fontSize: '12px'
-            }
+            },
+            crop : false,
+            overflow: 'none',
+            format: '{point.name}:{point.y}',
+            softConnector: true
           }
         }
       },
@@ -48,23 +52,13 @@ export default class index extends BaseChart {
           ['发送合同',    976],
           ['成交',    846]
         ]
-      }],
-      plotOptions: {
-        series: {
-          dataLabels: {
-            crop : false,
-            overflow: 'none',
-            format: '{point.name}:{point.y}',
-            softConnector: true
-          }
-        }
-      }
+      }]
     }
     this.currentConfig = _.merge({},this.initConfig,this.customConfig);
   }
 
   componentDidMount(){
-    this.chart = Highcharts.chart(this.container, this.currentConfig);
+    this.chart = Highcharts.chart(this.container, this.currentConfig,(chart)=>this.tipRender(chart));
   }
 
   // 对this.currentConfig进行过滤，排除多余参数
@@ -84,8 +78,22 @@ export default class index extends BaseChart {
   }
 
   selectFormat = (value)=> {
-    const ObjConfig = { dataLabels:{ format: value} }
+    const ObjConfig = { dataLabels:{ format: value } }
     this.setFunnelConfig(ObjConfig);
+  }
+
+  tipRender=(chart)=>{
+    let maxLabelLength = 0;
+    _.forEach(chart.series[0].points,point => {
+      if(point.dataLabel.width > maxLabelLength) {
+        maxLabelLength = point.dataLabel.width;
+      }
+    });
+    maxLabelLength = Math.ceil(maxLabelLength)
+    chart.update({
+      chart: { marginRight: maxLabelLength },
+      title: { x: - maxLabelLength / 2 }
+    })
   }
 
   render() {
@@ -100,14 +108,10 @@ export default class index extends BaseChart {
     ]
     return (
       <div style={{minWidth: '410px', maxWidth: '600px',height: '400px' ,margin: '0 auto',border:'1px red solid',overflow:'hidden'}}>
-        <Select style={{ width: 120 }} onChange={this.selectFormat}>
-          {
-            _.map(Option,(item,index)=>
-              <Select.Option key={index} value={item.value}>{item.name}</Select.Option>
-            )
-          }
+        {/* <Select style={{ width: 120 }} onChange={this.selectFormat}>
+          { _.map(Option,(item,index)=><Select.Option key={index} value={item.value}>{item.name}</Select.Option>)}
         </Select>
-        <Button onClick={()=> this.setFunnelConfig(this.updateConfig)}>修改参数配置</Button>
+        <Button onClick={()=> this.setFunnelConfig(this.updateConfig)}>修改参数配置</Button> */}
         <div style={{width:'100%',height:'100%'}} ref={(el)=>{this.container = el}}/>
       </div>
     )
