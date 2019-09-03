@@ -17,29 +17,29 @@ export default class index extends BaseChart {
     }
     this.customConfig = {
       chart: {
-        type: 'funnel'
+        type: 'funnel' // 类型
       },
       plotOptions: {
         series: {
-          neckWidth: '30%',
-          neckHeight: '25%',
-          borderColor: '#ffffff',
-          borderWidth: 1,
+          neckWidth: '30%', //颈宽
+          neckHeight: '25%', // 颈髙
+          borderColor: '#ffffff', // 边框颜色
+          borderWidth: 1, // 边框宽度
           dataLabels: {  // 数据标签
-            enabled: true,
-            borderWidth: 0,
-            borderRadius: 0,
-            borderColor: undefined,
-            backgroundColor: undefined,
-            color: null,
-            padding: 5,
+            inside:true, // 标签放在内置还是外侧
+            enabled: true, // 标签显示(隐藏)
+            borderWidth: 0, //标签边框宽度
+            borderRadius: 0, // 标签边框圆角
+            borderColor: undefined, // 标签边框颜色
+            backgroundColor: undefined, // 标签颜色
+            color: null, // 标签文字颜色
+            padding: 5, // 标签内边距
             style: {
-              fontSize: '12px'
+              fontSize: '12px' // 标签字体大小
             },
-            crop : false,
-            overflow: 'none',
-            format: '{point.name}:{point.y}',
-            softConnector: true
+            crop : false, // 标签超出绘图区时是否隐藏
+            overflow: 'none', // 标签超出绘制区处理
+            format: '{point.name}:{point.y}', // 显示格式
           }
         }
       },
@@ -83,6 +83,7 @@ export default class index extends BaseChart {
   }
 
   tipRender=(chart)=>{
+    console.log(chart)
     let maxLabelLength = 0;
     _.forEach(chart.series[0].points,point => {
       if(point.dataLabel.width > maxLabelLength) {
