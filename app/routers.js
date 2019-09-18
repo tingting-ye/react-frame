@@ -21,13 +21,15 @@ import Select from './page/AntD/Select'
 import Tree from './page/AntD/Tree'
 import Table from './page/AntD/Table'
 
+import Inframe from './page/other/iframe'
+
 
 import Funnel from './page/HighCharts/Funnel/index'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={Funnel} />
+      <IndexRoute component={Inframe} />
     </Route>
   </Route>
 )

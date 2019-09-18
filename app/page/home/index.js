@@ -25,7 +25,7 @@ export default class index extends Component {
     return (
       <div>
         <div className="page">
-          <div className="page-content">
+          <div className="page-content" style={{ width: '1000px', height: '500px', margin: '0 auto'}}>
             {this.props.children}
           </div>
         </div>

@@ -109,10 +109,10 @@ export default class index extends BaseChart {
     ]
     return (
       <div style={{minWidth: '410px', maxWidth: '600px',height: '400px' ,margin: '0 auto',border:'1px red solid',overflow:'hidden'}}>
-        {/* <Select style={{ width: 120 }} onChange={this.selectFormat}>
+        <Select style={{ width: 120 }} onChange={this.selectFormat}>
           { _.map(Option,(item,index)=><Select.Option key={index} value={item.value}>{item.name}</Select.Option>)}
         </Select>
-        <Button onClick={()=> this.setFunnelConfig(this.updateConfig)}>修改参数配置</Button> */}
+        <Button onClick={()=> this.setFunnelConfig(this.updateConfig)}>修改参数配置</Button>
         <div style={{width:'100%',height:'100%'}} ref={(el)=>{this.container = el}}/>
       </div>
     )
