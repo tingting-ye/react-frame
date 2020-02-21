@@ -28,11 +28,12 @@ import Inframe from './page/other/iframe'
 
 import Funnel from './page/HighCharts/Funnel/index'
 import Histogram from './page/HighCharts/Histogram/index'
+import OrderList from './page/other/orderList'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={Table} />
+      <IndexRoute component={Histogram} />
     </Route>
   </Route>
 )
