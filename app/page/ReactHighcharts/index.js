@@ -62,17 +62,18 @@ export default class index extends Component {
     }
     chart.addSeries(newPoint1)
     const self = this
-    // setInterval(function () {
-    //   var x = Date.parse(new Date()), // 当前时间
-    //     y = Math.random()*100;          // 随机值
-    //     chart.update(config)
-    //     if(series[0].data.length>=120){
-    //       series[0].addPoint([x, y], false, true);
-    //     }else{
-    //       series[0].addPoint([x, y], false, false);
-    //     }
-    //     chart.redraw()
-    // }, 1000);
+    setInterval(function () {
+      if(!(typeof chart === 'object' && chart!==null && Object.keys(chart).length>0)) return;
+      var x = Date.parse(new Date()), // 当前时间
+        y = Math.random()*100;          // 随机值
+        chart.update(config)
+        if(series[0].data.length>=120){
+          series[0].addPoint([x, y], false, true);
+        }else{
+          series[0].addPoint([x, y], false, false);
+        }
+        chart.redraw()
+    }, 1000);
   }
 
   componentWillReceiveProps () {
@@ -87,6 +88,20 @@ export default class index extends Component {
     }
   }
 
+  componentWillUnmount (){
+    if(this.chart){
+      this.chart.chart.destroy();
+      this.chart = null
+    }
+  }
+
+  hid =()=>{
+    if(this.chart){
+      this.chart.chart.destroy();
+      this.chart = null
+    }
+  }
+
   render() {
     return (
       <div style={{ width: '70%', margin: '50px auto', border: '1px solid yellow' }}>
@@ -94,6 +109,7 @@ export default class index extends Component {
           config={this.config}
           ref={(el) => { this.chart = el }}
         />
+        <div onClick={this.hid}>点击</div>
       </div>
     )
   }

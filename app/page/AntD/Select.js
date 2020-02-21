@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 
 export default class index extends Component {
   constructor(props) {
     super(props)
     this.state = {
     }
+    console.log(moment().startOf('month').format("YYYY-MM-DD"))
+    console.log(moment().endOf('month').format("YYYY-MM-DD"))
   }
 
   render() {
