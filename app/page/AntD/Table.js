@@ -5,13 +5,13 @@ export default class index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      number: 0
+      number: 20
     }
   }
 
-  dataList = ()=> {
+  dataList = (number)=> {
     const list = []
-    for(let i=0;i<300;i+=1) {
+    for(let i=0;i<number;i+=1) {
       list.push({
         key: i,
         name: '胡彦斌***'+i,
@@ -49,12 +49,13 @@ export default class index extends Component {
         name: record.name,
       }),
     };
+    const data = this.dataList(this.state.number)
     return (
       <div>
         <div className="page">
           <div className="page-content">
-            <Table dataSource={this.dataList()} pagination={false} columns={columns} rowSelection={rowSelection}/>
-            <Button onClick={()=>this.setState({number:this.state.number+1})}>{this.state.number}</Button>
+            <Table dataSource={data} pagination={false} columns={columns} rowSelection={rowSelection} scroll={{y:300}}/>
+            {/* <Button onClick={()=>this.setState({number:300})}>{this.state.number}</Button> */}
           </div>
         </div>
       </div>

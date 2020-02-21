@@ -14,25 +14,26 @@ import ReactRndApi from './page/ReactRnd/rndApi'
 // React-context
 import ReactReduxDefault from './page/ReactRedux/index'
 // React-Highcharts
-import ReactHighchartsDefault from './page/ReactHighcharts/index'
+import ReactHighchartsDefault from './page/ReactHighcharts/chart1/chart'
 // React-Dnd -基础
 import ReactDndDefault from './page/ReactDnd/index'
 import Select from './page/AntD/Select'
 import Tree from './page/AntD/Tree'
 import Table from './page/AntD/Table'
-// import Input from './page/AntD/input'
-import InputNumber from './page/AntD/inputNumber'
-import Checkbox from './page/AntD/checkbox'
+import InputNumber from './page/AntD/InputNumber'
+import CeShi from './page/other/CeShi'
 
 import Inframe from './page/other/iframe'
 
 
 import Funnel from './page/HighCharts/Funnel/index'
+import Histogram from './page/HighCharts/Histogram/index'
+import OrderList from './page/other/orderList'
 
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={Select} />
+      <IndexRoute component={OrderList} />
     </Route>
   </Route>
 )
