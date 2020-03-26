@@ -1,38 +1,20 @@
-import React, { Component } from 'react'
-import { DropTarget } from 'react-dnd';
-import ItemTypes from './Constants';
+import React, { Component } from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTMLBackend from 'react-dnd-html5-backend';
+import LeftAppList from './LeftAppList'
+import Application from './Application'
 
-let ctrlName = ''
-
-const cardSource = {
-  drop(props, monitor) {
-    if(monitor.isOver()){
-      const { Widget } = monitor.getItem()
-      ctrlName = Widget
-    }
-  }
-};
-
-@DropTarget(ItemTypes.Chart, cardSource, (connect, monitor) => ({
-  connectDragTarget: connect.dropTarget(),
-  canDrop: monitor.canDrop(),
-  isOver: monitor.isOver()
-}))
-export default class index extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
+// 将 HTMLBackend 作为参数传给 DragDropContext
+@DragDropContext(HTMLBackend)
+class App extends Component {
   render() {
-    debugger
-    const {connectDragTarget} = this.props;
-    return connectDragTarget(
-      <div style={{
-        width: '900px'
-      }}>
-        sdfafe
-      </div>
-    )
+    return (
+        <div style={{ paddingLeft: 200, paddingTop: 50 }}>
+          <LeftAppList />
+          <Application />
+        </div>
+    );
   }
 }
+
+export default App;

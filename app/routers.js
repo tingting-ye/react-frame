@@ -33,7 +33,7 @@ import OrderList from './page/other/orderList'
 const routers = (
   <Route>
     <Route path="/" component={App}>
-      <IndexRoute component={OrderList} />
+      <IndexRoute component={ReactDndDefault} />
     </Route>
   </Route>
 )
